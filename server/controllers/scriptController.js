@@ -4,6 +4,12 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const jobStore = require("../jobStore"); // In-memory job tracking object
 
+const VIDEO_EXTENSIONS = ['.mp4', '.mov', '.avi', '.mkv', '.webm'];
+
+function isVideoFile(filename) {
+  return VIDEO_EXTENSIONS.includes(path.extname(filename).toLowerCase());
+}
+
 // Generate a new script job
 exports.generateScript = (req, res, next) => {
   try {
@@ -15,10 +21,8 @@ exports.generateScript = (req, res, next) => {
 
     const scriptPath = path.join(__dirname, "..", "main.py");
 
-    const python = spawn("python3", [scriptPath], { cwd: outputDir });
-
-    python.stdin.write(inputText + "\n");
-    python.stdin.end();
+    // Pass the YouTube URL as a command-line argument
+    const python = spawn("python3", [scriptPath, inputText], { cwd: outputDir });
 
     jobStore[jobId] = {
       process: python,
@@ -38,7 +42,16 @@ exports.generateScript = (req, res, next) => {
     python.on("close", () => {
       jobStore[jobId].completed = true;
       try {
-        jobStore[jobId].files = fs.readdirSync(outputDir);
+        // Look for video files inside the 'output' subdirectory
+        const outputSubdir = path.join(outputDir, 'output');
+        let files = [];
+        if (fs.existsSync(outputSubdir)) {
+          files = fs.readdirSync(outputSubdir)
+            .filter(
+              (f) => isVideoFile(f) && !f.startsWith('._')
+            );
+        }
+        jobStore[jobId].files = files;
       } catch {
         jobStore[jobId].files = [];
       }
@@ -70,7 +83,7 @@ exports.getJobStatus = (req, res, next) => {
 exports.getResultFile = (req, res) => {
   const { jobId, filename } = req.params;
 
-  const filePath = path.join(__dirname, "..", "outputs", jobId, filename);
+  const filePath = path.join(__dirname, "..", "outputs", jobId, "output", filename);
 
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {
