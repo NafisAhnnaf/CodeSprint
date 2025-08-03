@@ -7,9 +7,8 @@ import Layout from "./layouts/Layout";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./auth/ProtectedRoute"
-import Whiteboard from './pages/Whiteboard';
-
+import ProtectedRoute from "./auth/ProtectedRoute";
+import Whiteboard from "./pages/Whiteboard";
 
 function App() {
   return (
@@ -28,7 +27,6 @@ function App() {
             }
           />
           <Route path="*" element={<NotFound />} />
-          <Route path="/whiteboard" element={<Whiteboard />} />
         </Route>
       </Routes>
     </>
