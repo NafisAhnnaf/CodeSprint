@@ -138,12 +138,7 @@ function Navbar() {
           )}
         </div>
 
-        <Player
-          src="./src/assets/top.json"
-          className="nav-lottie"
-          loop
-          autoplay
-        />
+        <Player src="/top.json" className="nav-lottie" loop autoplay />
       </nav>
 
       <AnimatePresence>

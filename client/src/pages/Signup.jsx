@@ -49,7 +49,7 @@ function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    
+
     // Check password match
     if (form.password !== form.confirmPassword) {
       setError("Passwords do not match");
@@ -89,7 +89,10 @@ function Signup() {
             <motion.h2 variants={itemVariants}>Create Account</motion.h2>
 
             <form onSubmit={handleSignup}>
-              <motion.div className="signup-input-group" variants={itemVariants}>
+              <motion.div
+                className="signup-input-group"
+                variants={itemVariants}
+              >
                 <label htmlFor="username">Name</label>
                 <motion.input
                   type="text"
@@ -105,7 +108,10 @@ function Signup() {
                 />
               </motion.div>
 
-              <motion.div className="signup-input-group" variants={itemVariants}>
+              <motion.div
+                className="signup-input-group"
+                variants={itemVariants}
+              >
                 <label htmlFor="email">Email</label>
                 <motion.input
                   type="email"
@@ -121,7 +127,10 @@ function Signup() {
                 />
               </motion.div>
 
-              <motion.div className="signup-input-group" variants={itemVariants}>
+              <motion.div
+                className="signup-input-group"
+                variants={itemVariants}
+              >
                 <label htmlFor="password">Password</label>
                 <motion.input
                   type="password"
@@ -137,7 +146,10 @@ function Signup() {
                 />
               </motion.div>
 
-              <motion.div className="signup-input-group" variants={itemVariants}>
+              <motion.div
+                className="signup-input-group"
+                variants={itemVariants}
+              >
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <motion.input
                   type="password"
@@ -184,7 +196,7 @@ function Signup() {
           animate="visible"
         >
           <Player
-            src="./src/assets/signup2.json"
+            src="/signup2.json"
             className="signup-lottie-player"
             loop
             autoplay

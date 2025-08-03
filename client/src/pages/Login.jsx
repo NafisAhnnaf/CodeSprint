@@ -86,7 +86,7 @@ function Login() {
           animate="visible"
         >
           <Player
-            src="./src/assets/login.json" // Replace with your login Lottie JSON path
+            src="/login.json" // Replace with your login Lottie JSON path
             className="login-lottie-player"
             loop
             autoplay
