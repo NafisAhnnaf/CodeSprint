@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useNavigate } from "react-router-dom"; // 🟢 Import useNavigate
-import backgroundLottie from "../assets/background.json";
 
 function Home() {
   const navigate = useNavigate(); // 🟢 Initialize navigate
@@ -26,7 +25,7 @@ function Home() {
     >
       <div className="lottie-background-container">
         <Player
-          src={backgroundLottie}
+          src={"/background.json"} // 🟢 Replace with your background Lottie JSON path
           loop
           autoplay
           className="lottie-background-player"

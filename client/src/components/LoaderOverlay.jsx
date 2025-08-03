@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
-import loaderLottie from "../assets/loading.json";  // Add your loader JSON file here
+// Add your loader JSON file here
 
 const LoaderOverlay = () => {
   const location = useLocation();
@@ -13,7 +13,7 @@ const LoaderOverlay = () => {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);  // Simulate loading time (adjust as needed)
+    }, 1000); // Simulate loading time (adjust as needed)
 
     return () => clearTimeout(timer);
   }, [location]);
@@ -29,9 +29,9 @@ const LoaderOverlay = () => {
           exit={{ opacity: 0 }}
         >
           <Player
-            src={loaderLottie}
+            src="/loading.json"
             className="w-48 h-48"
-            style={{ transform: 'scale(1.8)' }}
+            style={{ transform: "scale(1.8)" }}
             loop
             autoplay
           />
