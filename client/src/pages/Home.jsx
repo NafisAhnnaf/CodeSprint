@@ -1,4 +1,5 @@
 import React from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useNavigate } from "react-router-dom"; // 🟢 Import useNavigate
