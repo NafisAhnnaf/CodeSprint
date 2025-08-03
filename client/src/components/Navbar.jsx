@@ -66,7 +66,7 @@ function Navbar() {
 
         <div className="nav-center">
           <Link to={"/"}>
-            <h1>Dhongorsho</h1>
+            <h1>StudyBuddy</h1>
           </Link>
         </div>
 

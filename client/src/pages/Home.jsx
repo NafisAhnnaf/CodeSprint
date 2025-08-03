@@ -31,7 +31,8 @@ function Home() {
           className="lottie-background-player"
         />
         <div className="overlay-content">
-          <h1>Welcome to Dhongorsho!</h1>
+          <h1>Welcome to</h1>
+          <h1>StudyBuddy!</h1>
           <p>Explore our animated world.</p>
           <motion.button
             whileHover={{ scale: 1.05 }}
