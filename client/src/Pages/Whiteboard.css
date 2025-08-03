@@ -1,0 +1,123 @@
+.whiteboard-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0f24, #1f2d4a);
+    color: white;
+    font-family: sans-serif;
+  }
+  
+  .directory-panel {
+    width: 20%;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .folder {
+    margin-bottom: 15px;
+  }
+  
+  .files {
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+  
+  .file {
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .file:hover {
+    color: #00f5ff;
+  }
+  
+  .whiteboard-panel {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .toolbar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .palette {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .palette:hover{
+    scale: 1.2;
+    transition: 0.1s ease-in-out;
+  }
+  
+  .palette.red { background-color: red; }
+  .palette.blue { background-color: blue; }
+  .palette.green { background-color: green; }
+  .palette.yellow { background-color: yellow; }
+  
+  .icon {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .icon:hover{
+    scale: 1.2;
+    transition: 0.1s ease-in-out;
+  }
+  
+  .canvas-area {
+    width: 100%;
+    height: 80%;
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    overflow: hidden;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .whiteboard-lottie {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 150px;
+    opacity: 0.2;
+  }
+  
+  .chatbot-panel {
+    width: 20%;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .chat-window {
+    height: 80%;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  .chat-input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+  }
+  
