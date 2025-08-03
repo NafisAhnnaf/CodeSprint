@@ -70,13 +70,12 @@ function Login() {
       console.log(err);
     }
   };
-  const handleGoogleLogin = ()=>{
+  const handleGoogleLogin = () => {
     console.log("Google login not implemented");
-  }
+  };
 
   return (
     <>
-
       <div className="login-page-container">
         {/* Lottie Animation Section */}
 
@@ -164,7 +163,7 @@ function Login() {
               </motion.button>
             </form>
 
-            <motion.div variants={itemVariants} className="divider">
+            {/* <motion.div variants={itemVariants} className="divider">
               OR
             </motion.div>
 
@@ -206,7 +205,7 @@ function Login() {
                 />
               </svg>
               Continue with Google
-            </motion.button>
+            </motion.button> */}
           </motion.div>
         </motion.div>
       </div>

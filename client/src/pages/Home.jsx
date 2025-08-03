@@ -1,14 +1,18 @@
 import React from "react";
-//import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
-//import { useNavigate } from "react-router-dom"; // 🟢 Import useNavigate
+import { useNavigate } from "react-router-dom"; // 🟢 Import useNavigate
 import backgroundLottie from "../assets/background.json";
 
 function Home() {
-  //const navigate = useNavigate(); // 🟢 Initialize navigate
+  const navigate = useNavigate(); // 🟢 Initialize navigate
 
   const handleGetStarted = () => {
-    window.location.href = import.meta.env.VITE_WHITEBOARD; // 🟢 Navigate to Whiteboard Page
+    if (localStorage.getItem("token")) {
+      window.location.href = import.meta.env.VITE_WHITEBOARD; // 🟢 Navigate to Whiteboard Page
+    } else {
+      navigate("/login"); // 🟢 Navigate to Login Page
+    }
   };
 
   return (
