@@ -10,7 +10,7 @@ import html2canvas from "html2canvas";
 
 const LOCAL_STORAGE_KEY = "key";
 
-const VITE_API_URL = import.meta.env.VITE_API_URL || "http:localhost:8900"
+const VITE_API_URL = import.meta.env.VITE_API_URL || "http:localhost:8900";
 
 interface SavedState {
   pages: Page[];
@@ -56,18 +56,16 @@ export default function Home() {
   const [color, setColor] = useState("rgb(255, 255, 255)");
   const [pages, setPages] = useState<Page[]>([
     {
-      id: 'page-1',
+      id: "page-1",
       drawingActions: [],
       actionIndex: -1,
       answers: [],
       dictOfVars: {},
-      title: 'Page 1'
-    }
+      title: "Page 1",
+    },
   ]);
 
-
-
-  const [currentPageId, setCurrentPageId] = useState<string>('');
+  const [currentPageId, setCurrentPageId] = useState<string>("");
   const [lastPos, setLastPos] = useState<{ x: number; y: number } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -77,53 +75,55 @@ export default function Home() {
   const [isExplaining, setIsExplaining] = useState(false);
 
   // const currentPage = pages.find(page => page.id === currentPageId) || pages[0];
-  const currentPage = pages.find(page => page.id === currentPageId) || pages[0] || null;
-
-useEffect(() => {
-  const savedState = localStorage.getItem(LOCAL_STORAGE_KEY);
-  if (savedState) {
-    try {
-      const parsedState: SavedState = JSON.parse(savedState);
-      
-      if (parsedState.pages && parsedState.pages.length > 0) {
-        setPages(parsedState.pages);
-        setCurrentPageId(parsedState.currentPageId || parsedState.pages[0].id);
-      } else {
-        initializeDefaultPage();
-      }
-    } catch (error) {
-      console.error("Failed to parse saved state", error);
-      initializeDefaultPage();
-    }
-  } else {
-    initializeDefaultPage();
-  }
-}, []);
-
-  const initializeDefaultPage = () => {
-  const defaultPage = {
-    id: 'page-1',
-    drawingActions: [],
-    actionIndex: -1,
-    answers: [],
-    dictOfVars: {},
-    title: 'Page 1'
-  };
-  setPages([defaultPage]);
-  setCurrentPageId(defaultPage.id);
-};
-
+  const currentPage =
+    pages.find((page) => page.id === currentPageId) || pages[0] || null;
 
   useEffect(() => {
-  // Only save if we have pages and a currentPageId
-  if (pages.length > 0 && currentPageId) {
-    const stateToSave: SavedState = {
-      pages,
-      currentPageId
+    const savedState = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedState) {
+      try {
+        const parsedState: SavedState = JSON.parse(savedState);
+
+        if (parsedState.pages && parsedState.pages.length > 0) {
+          setPages(parsedState.pages);
+          setCurrentPageId(
+            parsedState.currentPageId || parsedState.pages[0].id
+          );
+        } else {
+          initializeDefaultPage();
+        }
+      } catch (error) {
+        console.error("Failed to parse saved state", error);
+        initializeDefaultPage();
+      }
+    } else {
+      initializeDefaultPage();
+    }
+  }, []);
+
+  const initializeDefaultPage = () => {
+    const defaultPage = {
+      id: "page-1",
+      drawingActions: [],
+      actionIndex: -1,
+      answers: [],
+      dictOfVars: {},
+      title: "Page 1",
     };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToSave));
-  }
-}, [pages, currentPageId]);
+    setPages([defaultPage]);
+    setCurrentPageId(defaultPage.id);
+  };
+
+  useEffect(() => {
+    // Only save if we have pages and a currentPageId
+    if (pages.length > 0 && currentPageId) {
+      const stateToSave: SavedState = {
+        pages,
+        currentPageId,
+      };
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToSave));
+    }
+  }, [pages, currentPageId]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -189,7 +189,8 @@ useEffect(() => {
     }
 
     currentPage.answers.forEach((answer) => {
-      ctx.font = 'bold 40px "Inter", -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font =
+        'bold 40px "Inter", -apple-system, BlinkMacSystemFont, sans-serif';
       ctx.fillStyle = "#3b82f6";
       ctx.fillText(answer.text, answer.x, answer.y);
     });
@@ -198,16 +199,19 @@ useEffect(() => {
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (canvas) canvas.style.background = "white";
-    
+
     setIsDrawing(true);
     setLastPos({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
-    
-    setPages(prevPages => 
-      prevPages.map(page => 
+
+    setPages((prevPages) =>
+      prevPages.map((page) =>
         page.id === currentPageId
           ? {
               ...page,
-              drawingActions: page.drawingActions.slice(0, page.actionIndex + 1),
+              drawingActions: page.drawingActions.slice(
+                0,
+                page.actionIndex + 1
+              ),
               actionIndex: page.actionIndex + 1,
             }
           : page
@@ -228,8 +232,8 @@ useEffect(() => {
       color: isEraser ? "rgb(248, 250, 252)" : color,
     };
 
-    setPages(prevPages => 
-      prevPages.map(page => 
+    setPages((prevPages) =>
+      prevPages.map((page) =>
         page.id === currentPageId
           ? {
               ...page,
@@ -238,10 +242,10 @@ useEffect(() => {
                 {
                   lines: [
                     ...(page.drawingActions[page.actionIndex]?.lines || []),
-                    newLine
-                  ]
-                }
-              ]
+                    newLine,
+                  ],
+                },
+              ],
             }
           : page
       )
@@ -255,8 +259,8 @@ useEffect(() => {
   };
 
   const undo = () => {
-    setPages(prevPages => 
-      prevPages.map(page => 
+    setPages((prevPages) =>
+      prevPages.map((page) =>
         page.id === currentPageId && page.actionIndex >= 0
           ? { ...page, actionIndex: page.actionIndex - 1 }
           : page
@@ -273,15 +277,15 @@ useEffect(() => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
-    setPages(prevPages => 
-      prevPages.map(page => 
+    setPages((prevPages) =>
+      prevPages.map((page) =>
         page.id === currentPageId
           ? {
               ...page,
               drawingActions: [],
               actionIndex: -1,
               dictOfVars: {},
-              answers: []
+              answers: [],
             }
           : page
       )
@@ -296,13 +300,16 @@ useEffect(() => {
 
     setIsDrawing(true);
     setLastPos({ x, y });
-    
-    setPages(prevPages => 
-      prevPages.map(page => 
+
+    setPages((prevPages) =>
+      prevPages.map((page) =>
         page.id === currentPageId
           ? {
               ...page,
-              drawingActions: page.drawingActions.slice(0, page.actionIndex + 1),
+              drawingActions: page.drawingActions.slice(
+                0,
+                page.actionIndex + 1
+              ),
               actionIndex: page.actionIndex + 1,
             }
           : page
@@ -326,8 +333,8 @@ useEffect(() => {
       color: isEraser ? "rgb(248, 250, 252)" : color,
     };
 
-    setPages(prevPages => 
-      prevPages.map(page => 
+    setPages((prevPages) =>
+      prevPages.map((page) =>
         page.id === currentPageId
           ? {
               ...page,
@@ -336,10 +343,10 @@ useEffect(() => {
                 {
                   lines: [
                     ...(page.drawingActions[page.actionIndex]?.lines || []),
-                    newLine
-                  ]
-                }
-              ]
+                    newLine,
+                  ],
+                },
+              ],
             }
           : page
       )
@@ -355,7 +362,7 @@ useEffect(() => {
 
   const addNewPage = () => {
     const newPageId = `page-${Date.now()}`;
-    setPages(prev => [
+    setPages((prev) => [
       ...prev,
       {
         id: newPageId,
@@ -363,8 +370,8 @@ useEffect(() => {
         actionIndex: -1,
         answers: [],
         dictOfVars: {},
-        title: `Page ${prev.length + 1}`
-      }
+        title: `Page ${prev.length + 1}`,
+      },
     ]);
     setCurrentPageId(newPageId);
   };
@@ -376,14 +383,13 @@ useEffect(() => {
 
   const deletePage = (pageId: string) => {
     if (pages.length <= 1) return;
-    
-    setPages(prev => {
-      const newPages = prev.filter(page => page.id !== pageId);
+
+    setPages((prev) => {
+      const newPages = prev.filter((page) => page.id !== pageId);
       if (pageId === currentPageId) {
-        const currentIndex = prev.findIndex(p => p.id === pageId);
-        const newCurrentId = currentIndex > 0 
-          ? prev[currentIndex - 1].id 
-          : newPages[0]?.id;
+        const currentIndex = prev.findIndex((p) => p.id === pageId);
+        const newCurrentId =
+          currentIndex > 0 ? prev[currentIndex - 1].id : newPages[0]?.id;
         setCurrentPageId(newCurrentId);
       }
       return newPages;
@@ -416,18 +422,21 @@ useEffect(() => {
         }
       });
 
-      setPages(prevPages => 
-        prevPages.map(page => 
+      setPages((prevPages) =>
+        prevPages.map((page) =>
           page.id === currentPageId
             ? {
                 ...page,
-                dictOfVars: { ...page.dictOfVars, ...newVars }
+                dictOfVars: { ...page.dictOfVars, ...newVars },
               }
             : page
         )
       );
 
-      if (currentPage.drawingActions.length > 0 && currentPage.actionIndex >= 0) {
+      if (
+        currentPage.drawingActions.length > 0 &&
+        currentPage.actionIndex >= 0
+      ) {
         const lastAction = currentPage.drawingActions[currentPage.actionIndex];
         if (lastAction && lastAction.lines.length > 0) {
           let minX = Infinity,
@@ -445,8 +454,8 @@ useEffect(() => {
           const answerX = maxX + 50;
           const answerY = (minY + maxY) / 2;
 
-          setPages(prevPages => 
-            prevPages.map(page => 
+          setPages((prevPages) =>
+            prevPages.map((page) =>
               page.id === currentPageId
                 ? {
                     ...page,
@@ -456,8 +465,8 @@ useEffect(() => {
                         x: answerX,
                         y: answerY,
                         text: data.result,
-                      }))
-                    ]
+                      })),
+                    ],
                   }
                 : page
             )
@@ -544,38 +553,38 @@ useEffect(() => {
 
   const exportToPDF = async () => {
     setIsLoading(true);
-    
+
     try {
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdf = new jsPDF("p", "mm", "a4");
       const margin = 10; // mm margin
       const pageWidth = pdf.internal.pageSize.getWidth() - margin * 2;
-      
+
       for (let i = 0; i < pages.length; i++) {
         const page = pages[i];
         setCurrentPageId(page.id);
-        
+
         // Wait for the canvas to update
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
         const canvas = canvasRef.current;
         if (!canvas) continue;
-        
+
         // Create a temporary container to render the canvas with proper dimensions
-        const tempContainer = document.createElement('div');
+        const tempContainer = document.createElement("div");
         tempContainer.style.width = `${pageWidth}mm`;
-        tempContainer.style.height = 'auto';
-        tempContainer.style.position = 'absolute';
-        tempContainer.style.left = '-9999px';
+        tempContainer.style.height = "auto";
+        tempContainer.style.position = "absolute";
+        tempContainer.style.left = "-9999px";
         document.body.appendChild(tempContainer);
-        
-        const tempCanvas = document.createElement('canvas');
+
+        const tempCanvas = document.createElement("canvas");
         tempCanvas.width = canvas.width;
         tempCanvas.height = canvas.height;
-        const ctx = tempCanvas.getContext('2d');
+        const ctx = tempCanvas.getContext("2d");
         if (ctx) {
           ctx.fillStyle = "rgb(248, 250, 252)";
           ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-          
+
           // Redraw the current page on the temp canvas
           for (let j = 0; j <= page.actionIndex; j++) {
             const action = page.drawingActions[j];
@@ -589,41 +598,42 @@ useEffect(() => {
               });
             }
           }
-          
+
           // Draw answers
           page.answers.forEach((answer) => {
-            ctx.font = 'bold 40px "Inter", -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.font =
+              'bold 40px "Inter", -apple-system, BlinkMacSystemFont, sans-serif';
             ctx.fillStyle = "#3b82f6";
             ctx.fillText(answer.text, answer.x, answer.y);
           });
         }
-        
+
         tempContainer.appendChild(tempCanvas);
-        
+
         // Convert to image
         const canvasData = await html2canvas(tempCanvas, {
           scale: 2,
           logging: false,
           useCORS: true,
         });
-        
+
         document.body.removeChild(tempContainer);
-        
-        const imgData = canvasData.toDataURL('image/png');
+
+        const imgData = canvasData.toDataURL("image/png");
         const imgProps = pdf.getImageProperties(imgData);
         const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
-        
+
         if (i > 0) {
           pdf.addPage();
         }
-        
+
         pdf.text(`Page ${i + 1}: ${page.title}`, margin, margin);
-        pdf.addImage(imgData, 'PNG', margin, margin + 5, pageWidth, pdfHeight);
+        pdf.addImage(imgData, "PNG", margin, margin + 5, pageWidth, pdfHeight);
       }
-    
-      pdf.save('math-notebook.pdf');
+
+      pdf.save("math-notebook.pdf");
     } catch (error) {
-      console.error('Error generating PDF:', error);
+      console.error("Error generating PDF:", error);
     } finally {
       setIsLoading(false);
     }
@@ -642,20 +652,21 @@ useEffect(() => {
       <div className="container mx-auto px-0 flex h-[calc(100vh-4rem)]">
         {/* Pages sidebar */}
         <div className="w-16 bg-gray-100 border-r border-gray-200 flex flex-col items-center py-4 space-y-2">
-          {pages.map(page => (
+          {pages.map((page) => (
             <button
               key={page.id}
               onClick={() => switchPage(page.id)}
               className={`w-12 h-12 rounded-lg flex items-center justify-center text-sm font-medium
-                ${currentPageId === page.id 
-                  ? 'bg-blue-100 text-blue-600 border border-blue-300' 
-                  : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
+                ${
+                  currentPageId === page.id
+                    ? "bg-blue-100 text-blue-600 border border-blue-300"
+                    : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
                 }`}
             >
-              {pages.findIndex(p => p.id === page.id) + 1}
+              {pages.findIndex((p) => p.id === page.id) + 1}
             </button>
           ))}
-          
+
           <button
             onClick={addNewPage}
             className="w-12 h-12 rounded-lg flex items-center justify-center 
@@ -672,8 +683,17 @@ useEffect(() => {
                         bg-white text-red-500 hover:bg-gray-50 border border-gray-200 
                         hover:text-red-600 mt-4"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
           )}
@@ -702,7 +722,9 @@ useEffect(() => {
               </Button>
               <Button
                 onClick={() => setIsEraser(!isEraser)}
-                className={`${isEraser ? 'bg-gray-200' : 'bg-white'} text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm`}
+                className={`${
+                  isEraser ? "bg-gray-200" : "bg-white"
+                } text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm`}
                 variant="outline"
                 disabled={isLoading}
               >
@@ -782,12 +804,28 @@ useEffect(() => {
 
         {/* Sidebar */}
         {sidebarOpen && (
-          <div
-            className="w-96 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col"
-            style={{ height: "100vh" }}
-          >
-            <div className="p-4 border-b border-gray-200">
+          <div className="fixed inset-0 z-50 md:relative md:w-96 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
               <h3 className="font-semibold text-lg">Explanation</h3>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="md:hidden text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               {explanation ? (
