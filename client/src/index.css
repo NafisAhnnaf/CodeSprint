@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -6,12 +7,21 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Removed background-color from :root to avoid conflict with components.css body */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Removed redundant body styles, now managed by components.css */
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Ensure content stacks vertically */
+  min-width: 320px;
+  /* min-height: 100vh; is now in components.css body */
 }
 
 a {
@@ -23,21 +33,81 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  margin: 0; /* Remove default margin to prevent layout shifts */
 }
 
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Styles for Lottie as background overlay */
+.lottie-background-container {
+  position: relative; /* Container for Lottie and overlay content */
+  width: 100%;
+  flex-grow: 1; /* Allows it to take remaining vertical space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensure Lottie doesn't overflow */
+}
+
+.lottie-background-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3; /* Adjust opacity for background effect */
+  z-index: 1; /* Lottie is behind content */
+  pointer-events: none; /* Allow clicks to pass through to content below if any */
+}
+
+.overlay-content {
+  position: relative; /* Position content above Lottie */
+  z-index: 2; /* Ensure content is above Lottie */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+
+.overlay-content h1 {
+  font-size: clamp(2.5em, 5vw, 4em); /* Responsive font size */
+  margin-bottom: 15px;
+}
+
+.overlay-content p {
+  font-size: clamp(1em, 2vw, 1.5em); /* Responsive font size */
+  line-height: 1.6;
+}
+
+
+/* Media query for light color scheme (kept from original, but main background is forced dark) */
 @media (prefers-color-scheme: light) {
+  /* These styles will only apply if the user's system prefers light mode,
+     but the main body background is forced to dark in components.css */
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #7e92a4;
+    /* background-color: #ffffff; -- Removed */
   }
   a:hover {
     color: #747bff;

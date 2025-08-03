@@ -1,0 +1,194 @@
+/* components.css */
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0a0f24; /* Dark navy background */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll on small screens */
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 4vw; /* Responsive padding */
+    background: linear-gradient(145deg, #1b1f3b, #121527);
+    border-radius: 50px;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    margin: 20px auto; /* Center the navbar with some margin */
+    max-width: 1200px; /* Max width for larger screens */
+    width: 90%; /* Responsive width */
+    box-sizing: border-box; /* Include padding in width */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+  
+  .nav-left, .nav-right {
+    display: flex;
+    gap: 1.5vw; /* Responsive gap */
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: center; /* Center items if they wrap */
+  }
+  
+  .nav-center {
+    flex-grow: 1; /* Allows center to take available space */
+    text-align: center;
+    min-width: 150px; /* Ensure title doesn't shrink too much */
+    margin: 10px 0; /* Add vertical margin for wrapping */
+  }
+  
+  .nav-center h1 {
+    color: white;
+    font-size: clamp(20px, 2.5vw, 32px); /* Responsive font size */
+    background: linear-gradient(90deg, #00f5ff, #00e0ff, #00c0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0; /* Remove default margin */
+  }
+  
+  .nav-item {
+    position: relative;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 5px 10px; /* Add some padding for better hover area */
+    border-radius: 5px;
+  }
+  
+  .nav-item:hover {
+    color: #00f5ff;
+    background-color: rgba(0, 245, 255, 0.1); /* Subtle background on hover */
+  }
+  
+  .nav-icon {
+    position: absolute;
+    top: -25px; /* Adjust position relative to text */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #00f5ff;
+    pointer-events: none; /* Allows clicks to pass through to the text */
+    white-space: nowrap; /* Prevent icon text from wrapping */
+  }
+  
+  .nav-lottie {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0; /* Ensure it stays behind nav items */
+  }
+  
+  /* Search Bar Overlay */
+  .search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .search-bar-content {
+    background: linear-gradient(145deg, #1b1f3b, #121527);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box;
+  }
+  
+  .search-bar-content input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #00f5ff;
+    border-radius: 8px;
+    background-color: #0a0f24;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .search-bar-content input::placeholder {
+    color: #aaa;
+  }
+  
+  .search-bar-content button {
+    background-color: #00f5ff;
+    color: #0a0f24;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-bar-content button:hover {
+    background-color: #00c0ff;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      padding: 15px 20px;
+      border-radius: 20px;
+      width: 95%;
+    }
+  
+    .nav-left, .nav-right {
+      width: 100%;
+      justify-content: space-around;
+      margin-bottom: 10px;
+      gap: 10px; /* Smaller gap on small screens */
+    }
+  
+    .nav-center {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  
+    .nav-item {
+      padding: 8px 12px;
+      font-size: 15px;
+    }
+  
+    .nav-icon {
+      font-size: 16px;
+      top: -20px; /* Adjust icon position for smaller text */
+    }
+  
+    .nav-lottie {
+      width: 100px;
+      height: 100px;
+      top: -30px;
+      right: -30px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .nav-item {
+      font-size: 14px;
+      padding: 6px 10px;
+    }
+  
+    .nav-icon {
+      font-size: 14px;
+      top: -18px;
+    }
+  }
+  

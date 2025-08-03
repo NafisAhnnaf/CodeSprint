@@ -2,17 +2,16 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import LoaderOverlay from "../components/LoaderOverlay";
 
 const Layout = () => {
   return (
     <>
+      <LoaderOverlay />  {/* Loader will track route changes */}
       <Navbar />
-      <ToastContainer position="top-center" autoClose={2500} />
-      <main className="p-4">
+      <main className="min-h-screen">
         <Outlet />
       </main>
-
       <Footer />
     </>
   );

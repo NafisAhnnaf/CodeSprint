@@ -1,178 +1,154 @@
-import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Box,
-  Button,
-  Avatar,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../auth/useAuth"; // 👈 ensure correct import path
+// Navbar.jsx
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Player } from '@lottiefiles/react-lottie-player';
+import './components.css';
+import { Link } from 'react-router-dom';
 
-const navItems = [
-  { text: "Home", path: "/" },
-  { text: "Agent", path: "/agent" },
-  { text: "Quiz", path: "/quiz" },
-];
 
-const Navbar = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const navigate = useNavigate();
-  const { token, logout } = useAuth();
+function Navbar() {
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
-  const toggleDrawer = () => {
-    setMobileOpen(!mobileOpen);
+  const navItemsLeft = [
+    { name: 'Home', icon: '🏠' },
+    { name: 'About', icon: 'ℹ️' },
+    { name: 'Contact', icon: '📞' }
+  ];
+
+  const navItemsRight = [
+    { name: 'Search', icon: '🔍' },
+    { name: 'Login', icon: '🔑' },
+    { name: 'Signup', icon: '📝' }
+  ];
+
+  const handleSearchClick = () => {
+    setShowSearchBar(true);
   };
 
-  const handleAvatarClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleCloseSearchBar = () => {
+    setShowSearchBar(false);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  // Framer Motion variants for the search bar
+  const searchBarVariants = {
+    hidden: { opacity: 0, y: -50, scale: 0.8 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
+    exit: { opacity: 0, y: 50, scale: 0.8, transition: { duration: 0.2, ease: "easeIn" } },
   };
-
-  const handleLogout = () => {
-    logout();
-    handleClose();
-    navigate("/login");
-  };
-
-  const drawer = (
-    <Box onClick={toggleDrawer} sx={{ width: 240 }}>
-      <List>
-        {[
-          ...navItems,
-          ...(token
-            ? []
-            : [
-                { text: "Login", path: "/login" },
-                { text: "Signup", path: "/signup" },
-              ]),
-        ].map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton onClick={() => navigate(item.path)}>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
 
   return (
     <>
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            StudyBuddy
-          </Typography>
-
-          {/* Desktop Nav Links */}
-          <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 1 }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.text}
-                color="inherit"
-                onClick={() => navigate(item.path)}
+      <nav className="navbar">
+        <div className="nav-left">
+          {navItemsLeft.map((item, index) => (
+            <Link key={index+1} to={item.name === 'Home' ? '/' : `/${item.name.toLowerCase()}`}>
+            <motion.div
+              key={index}
+              className="nav-item"
+              whileHover={{ scale: 1.1 }}
+            >
+              {item.name}
+              <motion.span
+                className="nav-icon"
+                initial={{ opacity: 0, y: -10 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
               >
-                {item.text}
-              </Button>
-            ))}
+                {item.icon}
+              </motion.span>
+            </motion.div>
+            </Link>
+          ))}
+        </div>
 
-            {/* Conditional Auth Buttons or Avatar */}
-            {!token ? (
-              <>
-                <Button color="inherit" onClick={() => navigate("/login")}>
-                  Login
-                </Button>
-                <Button color="inherit" onClick={() => navigate("/signup")}>
-                  Signup
-                </Button>
-              </>
-            ) : (
-              <>
-                <Tooltip title="Open menu">
-                  <IconButton onClick={handleAvatarClick} sx={{ p: 0 }}>
-                    <Avatar sx={{ bgcolor: "#1976d2" }}>N</Avatar>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                  onClick={handleClose}
-                  PaperProps={{
-                    elevation: 0,
-                    sx: {
-                      mt: 1.5,
-                      overflow: "visible",
-                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.1))",
-                      "&:before": {
-                        content: '""',
-                        display: "block",
-                        position: "absolute",
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: "background.paper",
-                        transform: "translateY(-50%) rotate(45deg)",
-                        zIndex: 0,
-                      },
-                    },
-                  }}
-                  transformOrigin={{ horizontal: "right", vertical: "top" }}
-                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                >
-                  <MenuItem onClick={() => navigate("/profile")}>
-                    Profile
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                </Menu>
-              </>
-            )}
-          </Box>
-        </Toolbar>
-      </AppBar>
+        <div className="nav-center">
+          <h1>Dhongorsho</h1>
+        </div>
 
-      {/* Mobile Drawer */}
-      <Drawer
-        anchor="left"
-        open={mobileOpen}
-        onClose={toggleDrawer}
-        ModalProps={{ keepMounted: true }}
-        sx={{
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
-        }}
+        <div className="nav-right">
+  {navItemsRight.map((item, index) => (
+    item.name === 'Search' ? (
+      // ⛔ DO NOT WRAP THIS IN <Link>
+      <motion.div
+        key={index}
+        className="nav-item"
+        whileHover={{ scale: 1.1 }}
+        onClick={handleSearchClick} // Opens Search Popup
+        style={{ cursor: 'pointer' }}
       >
-        {drawer}
-      </Drawer>
+        {item.name}
+        <motion.span
+          className="nav-icon"
+          initial={{ opacity: 0, y: -10 }}
+          whileHover={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {item.icon}
+        </motion.span>
+      </motion.div>
+    ) : (
+      // ✅ Wrap Login & Signup in <Link>
+      <Link
+        key={index}
+        to={`/${item.name.toLowerCase()}`}
+        className="nav-link"
+      >
+        <motion.div
+          className="nav-item"
+          whileHover={{ scale: 1.1 }}
+        >
+          {item.name}
+          <motion.span
+            className="nav-icon"
+            initial={{ opacity: 0, y: -10 }}
+            whileHover={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {item.icon}
+          </motion.span>
+        </motion.div>
+      </Link>
+    )
+  ))}
+</div>
+
+
+        {/* Lottie animation for Navbar - ensure the path is correct in your project */}
+        <Player
+          src="./src/assets/top.json" // Make sure this path is correct
+          className="nav-lottie"
+          loop
+          autoplay
+        />
+      </nav>
+
+      {/* Search Bar Overlay */}
+      <AnimatePresence>
+        {showSearchBar && (
+          <motion.div
+            className="search-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={handleCloseSearchBar} // Close when clicking outside
+          >
+            <motion.div
+              className="search-bar-content"
+              variants={searchBarVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the bar
+            >
+              <input type="text" placeholder="Search..." />
+              <button onClick={handleCloseSearchBar}>Close</button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
-};
+}
 
 export default Navbar;
