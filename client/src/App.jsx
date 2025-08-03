@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Whiteboard from "./pages/Whiteboard";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (

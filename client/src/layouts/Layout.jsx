@@ -3,11 +3,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 import LoaderOverlay from "../components/LoaderOverlay";
-
+import { ToastContainer } from "react-toastify";
 const Layout = () => {
   return (
     <>
-      <LoaderOverlay />  {/* Loader will track route changes */}
+      <LoaderOverlay /> {/* Loader will track route changes */}
+      <ToastContainer position="top-center" theme="dark" />
       <Navbar />
       <main className="min-h-screen">
         <Outlet />

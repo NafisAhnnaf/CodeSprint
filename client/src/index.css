@@ -39,7 +39,7 @@ h1 {
   margin: 0; /* Remove default margin to prevent layout shifts */
 }
 
-button {
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -56,7 +56,7 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 /* Styles for Lottie as background overlay */
 .lottie-background-container {
@@ -99,7 +99,6 @@ button:focus-visible {
   font-size: clamp(1em, 2vw, 1.5em); /* Responsive font size */
   line-height: 1.6;
 }
-
 
 /* Media query for light color scheme (kept from original, but main background is forced dark) */
 @media (prefers-color-scheme: light) {

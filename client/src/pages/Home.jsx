@@ -8,9 +8,11 @@ function Home() {
   const navigate = useNavigate(); // 🟢 Initialize navigate
 
   const handleGetStarted = () => {
-    if (localStorage.getItem("token")) {
+    if (JSON.parse(localStorage.getItem("auth-storage")).state.token) {
+      console.log("User authenticated, navigating to Whiteboard.");
       window.location.href = import.meta.env.VITE_WHITEBOARD; // 🟢 Navigate to Whiteboard Page
     } else {
+      console.log("User not authenticated, redirecting to login.");
       navigate("/login"); // 🟢 Navigate to Login Page
     }
   };
