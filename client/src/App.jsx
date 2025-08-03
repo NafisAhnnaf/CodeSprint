@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Whiteboard from "./pages/Whiteboard";
 import { ToastContainer } from "react-toastify";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <About />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="contact"
+            element={
+              <ProtectedRoute>
+                <Contact />
               </ProtectedRoute>
             }
           />
