@@ -1,6 +1,6 @@
 // Login.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import useAuth from "../auth/useAuth";
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
@@ -142,7 +142,7 @@ function Login() {
               </motion.div>
 
               <motion.div variants={itemVariants} className="forgot-password">
-                <a href="#">Forgot Password?</a>
+                <Link to={"/signup"}>New to StudyBuddy?</Link>
               </motion.div>
 
               <motion.button
