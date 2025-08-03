@@ -784,7 +784,7 @@ useEffect(() => {
         {sidebarOpen && (
           <div
             className="w-96 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col"
-            style={{ height: "calc(100vh - 180px)" }}
+            style={{ height: "100vh" }}
           >
             <div className="p-4 border-b border-gray-200">
               <h3 className="font-semibold text-lg">Explanation</h3>
