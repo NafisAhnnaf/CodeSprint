@@ -1,0 +1,155 @@
+/* about.css */
+
+.about-container {
+  font-family: "Inter", sans-serif;
+  color: #f0f0f0;
+  background-color: #0a0f24;
+  padding: 20px;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  min-height: 80vh;
+  padding: 50px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 600px;
+  text-align: left;
+}
+
+.hero-text h1 {
+  font-size: 3.5em;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00f5ff, #00c0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #aaa;
+}
+
+.hero-lottie {
+  flex: 1;
+  max-width: 500px;
+  height: auto;
+}
+
+/* --- Mission Section --- */
+.mission-section {
+  text-align: center;
+  padding: 80px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mission-section h2 {
+  font-size: 2.5em;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.mission-section p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #aaa;
+}
+
+/* --- Team Section --- */
+.team-section {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.team-section h2 {
+  font-size: 2.5em;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.team-card {
+  background: linear-gradient(145deg, #1b1f3b, #121527);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.avatar-placeholder {
+  font-size: 4em;
+  color: #00f5ff;
+  margin-bottom: 15px;
+}
+
+.team-card h3 {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.team-card p {
+  color: #aaa;
+  font-size: 1em;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-text {
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .hero-text h1 {
+    font-size: 2.5em;
+  }
+
+  .hero-text p {
+    font-size: 1em;
+  }
+
+  .hero-lottie {
+    max-width: 300px;
+  }
+
+  .mission-section {
+    padding: 60px 10px;
+  }
+
+  .mission-section h2 {
+    font-size: 2em;
+  }
+
+  .team-section {
+    padding: 60px 10px;
+  }
+
+  .team-section h2 {
+    font-size: 2em;
+  }
+}

@@ -27,6 +27,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="about"
+            element={
+              <ProtectedRoute>
+                <About />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
