@@ -481,7 +481,7 @@ useEffect(() => {
     try {
       const response = await axios({
         method: "post",
-        url: `${VITE_API_URL}/calculate`,
+        url: `${VITE_API_URL}/calculate/explain`,
         data: {
           image: canvas.toDataURL("image/png"),
           question: "Explain the solution to this problem",
@@ -521,7 +521,7 @@ useEffect(() => {
     try {
       const response = await axios({
         method: "post",
-        url: `${VITE_API_URL}/calculate`,
+        url: `${VITE_API_URL}/calculate/explain`,
         data: {
           image: canvas.toDataURL("image/png"),
           question: userQuestion,
