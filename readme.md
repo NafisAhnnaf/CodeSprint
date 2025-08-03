@@ -1,5 +1,8 @@
 # Study Buddy
 
+Try it out:
+https://codesprint.pages.dev/
+
 An intelligent digital whiteboard application that combines traditional drawing capabilities with Google Gemini AI-powered features for enhanced creativity and collaboration. Built with a modern frontend-backend architecture for optimal performance and scalability.
 
 ## 🎨 Features
