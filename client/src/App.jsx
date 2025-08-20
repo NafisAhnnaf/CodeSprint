@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Layout from "./layouts/Layout";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import MathVideo from "./pages/MathVideo";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Whiteboard from "./pages/Whiteboard";
@@ -25,6 +26,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="vid-gen"
+            element={
+              <ProtectedRoute>
+                <MathVideo />
               </ProtectedRoute>
             }
           />

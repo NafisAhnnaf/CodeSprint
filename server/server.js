@@ -8,6 +8,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const authRoutes = require("./routes/authRoutes");
 const sessionRoutes = require("./routes/sessionRoutes");
 const whiteboardRoutes = require("./routes/whiteboardRoutes");
+const videoGenRoutes = require("./routes/videoGenRoutes");
 const timeoutHandler = require("./middlewares/timeoutHandler");
 require("dotenv").config();
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => res.send("API is running..."));
 app.use("/api/auth", authRoutes);
 app.use("/api/session", timeoutHandler(15000), sessionRoutes);
 app.use("/api/whiteboard", whiteboardRoutes);
+app.use("/api/generate", videoGenRoutes);
 
 app.use(errorHandler);
 

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import "./pages.css";
-import Navbar from "../components/Navbar";
+import { toast } from "react-toastify";
 import Request from "../composables/Request";
 
 function Signup() {
@@ -60,9 +61,13 @@ function Signup() {
       // Send only necessary fields to the API (exclude confirmPassword)
       const { confirmPassword, ...submitData } = form;
       await Request.post("/api/auth/register", submitData);
+      toast.success("Profile created successfully!", {
+        toastId: "User-Created",
+      });
       navigate("/login");
     } catch (err) {
       console.error(err);
+      toast.error("Something went wrong", { toastId: "Error-Signup" });
       setError(err.response?.data?.message || "Signup failed.");
     }
   };

@@ -10,7 +10,7 @@ const Layout = () => {
       <LoaderOverlay /> {/* Loader will track route changes */}
       <ToastContainer position="top-center" theme="dark" />
       <Navbar />
-      <main className="min-h-screen">
+      <main className="min-h-[70vh]">
         <Outlet />
       </main>
       <Footer />

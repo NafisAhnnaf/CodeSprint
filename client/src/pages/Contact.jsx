@@ -50,7 +50,7 @@ export default function Contact() {
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Contact Form */}
         <motion.form
-          className="bg-white rounded-2xl shadow-2xl p-8 space-y-6"
+          className="bg-violet-100 rounded-2xl shadow-2xl p-8 space-y-6"
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
