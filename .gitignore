@@ -2,4 +2,191 @@
 /node_modules
 client/.env
 server/.env
-node_modules
+
+
+
+# Environment variables
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Manim output files
+media/
+output/
+animations/
+videos/
+images/
+tex/
+texts/
+
+# Temporary Manim files
+temp_animation.py
+temp_*.py
+
+# Generated audio files
+voiceover.mp3
+audio_*.mp3
+*.wav
+*.m4a
+
+# Generated video files
+output_animation.mp4
+final_output.mp4
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.auxlock
+
+# TinyTeX cache
+.texlive*
+.tinytex/
+
+# FFmpeg temporary files
+ffmpeg2pass-*.log
+temp_video.*
+temp_audio.*
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Documentation builds
+docs/_build/
+site/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.coverage
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Archive files (unless needed)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Local configuration files
+config.local.json
+settings.local.py
+
+# API keys and secrets (extra protection)
+*api_key*
+*secret*
+*token*
+credentials.json
+service-account*.json
+
+# Test outputs
+test_*.mp4
+test_*.mp3
+example_*.mp4

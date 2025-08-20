@@ -36,6 +36,7 @@ export default function Contact() {
       .then(
         (response) => {
           toast.success("Message has been submitted!");
+          console.log(response);
           window.location.reload(); // Reload the site
         },
         (err) => {
