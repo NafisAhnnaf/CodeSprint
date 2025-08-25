@@ -1,9 +1,9 @@
-import { spawn } from "child_process";
-import path from "path";
-import fs from "fs";
+const { spawn } = require("child_process");
+const path = require("path");
+const fs = require("fs");
 
 // POST /api/generate
-export const generateAnimation = async (req, res) => {
+exports.generateAnimation = async (req, res) => {
   try {
     console.log("Incoming Generate request");
     const { prompt } = req.body;
@@ -13,7 +13,7 @@ export const generateAnimation = async (req, res) => {
     }
 
     // Path to main.py
-    const scriptPath = path.resolve("../Text2MathVideoAI/backend/main.py");
+    const scriptPath = path.resolve("../MathVideoAI/backend/main.py");
 
     // Spawn python process using system python3
     console.log("Spawning Python process with user prompt");
@@ -73,6 +73,6 @@ export const generateAnimation = async (req, res) => {
 };
 
 // GET /health
-export const healthCheck = (req, res) => {
+exports.healthCheck = (req, res) => {
   res.json({ status: "healthy" });
 };
