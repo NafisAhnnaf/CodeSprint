@@ -6,12 +6,14 @@ import Login from "./pages/Login";
 import Layout from "./layouts/Layout";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
-import MathVideo from "./pages/MathVideo";
+import MathVideo from "./features/mathvidai/MathVideo";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./auth/ProtectedRoute";
-import Whiteboard from "./pages/Whiteboard";
+import Whiteboard from "./features/whiteboard/index";
 import { ToastContainer } from "react-toastify";
 import Contact from "./pages/Contact";
+import { MathJaxContext } from "better-react-mathjax";
+import { MantineProvider } from "@mantine/core";
 
 function App() {
   return (
@@ -50,6 +52,18 @@ function App() {
             element={
               <ProtectedRoute>
                 <Contact />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="whiteboard"
+            element={
+              <ProtectedRoute>
+                 <MantineProvider>
+                      <MathJaxContext>
+                      <Whiteboard />
+                      </MathJaxContext>
+                    </MantineProvider>
               </ProtectedRoute>
             }
           />

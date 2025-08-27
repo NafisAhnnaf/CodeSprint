@@ -12,5 +12,4 @@ const router = express.Router();
 router.post("/register", asyncHandler(register));
 router.post("/login", asyncHandler(login));
 router.get("/profile", protect, asyncHandler(getProfile));
-
 module.exports = router;

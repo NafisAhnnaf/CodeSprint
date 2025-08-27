@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./MathVideo.css";
-import Request from "../composables/Request";
+import Request from "../../composables/Request";
 
 function MathVideo() {
   const [prompt, setPrompt] = useState("");
