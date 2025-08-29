@@ -5,13 +5,14 @@ const router = express.Router();
 
 const {
   generateAnimation,
-  healthCheck,
+  getStatus,
+  getResult,
 } = require("../controllers/videoGenController");
 
 // Generate video/animation
 router.post("/", generateAnimation);
+router.get("/status/:jobId", getStatus);
+router.get("/result/:jobId", getResult);
 
-// Health check
-router.get("/", healthCheck);
 
 module.exports = router;

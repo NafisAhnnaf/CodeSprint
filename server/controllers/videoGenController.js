@@ -1,83 +1,115 @@
 const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const Job = require("../models/MathVidGen.js");
+
 // POST /api/generate
 const generateAnimation = async (req, res) => {
-  try {
-    console.log("Incoming Generate request");
-    const { prompt } = req.body;
+  const { prompt } = req.body;
+  if (!prompt || prompt.trim() === "") {
+    return res.status(400).json({ error: "Prompt is required" });
+  }
+  console.log("Received prompt:", prompt);
 
-    if (!prompt || prompt.trim() === "") {
-      return res.status(400).json({ error: "Prompt is required" });
+  // 1. Create job in DB
+  const job = await Job.create({ prompt, status: "pending" });
+  console.log("Created job with ID:", job._id);
+
+  // 2. Run Python script asynchronously
+  const scriptPath = path.resolve("../MathVideoAI/backend/main.py");
+  const outputFileName = `job_${job._id}.mp4`;
+  const filePath = path.resolve(__dirname, "..", outputFileName);
+
+  console.log("Spawning Python process:", scriptPath);
+
+  const pythonProcess = spawn("python3", ["-u", scriptPath, prompt], {
+    stdio: ["pipe", "pipe", "pipe"], // capture stdout and stderr
+  });
+
+  job.status = "running";
+  await job.save();
+  console.log("Job marked as running in DB");
+
+  let errorData = "";
+
+  // Stream stdout without formatting
+  pythonProcess.stdout.on("data", (data) => {
+    const msg = data.toString();
+    process.stdout.write(`[Python stdout] ${msg}`); // write as-is
+  });
+
+  // Stream stderr without formatting
+  pythonProcess.stderr.on("data", (data) => {
+    const msg = data.toString();
+    process.stderr.write(`[Python stderr] ${msg}`); // write as-is
+    errorData += msg;
+  });
+
+  pythonProcess.on("close", async (code) => {
+    console.log(`Python process exited with code ${code}`);
+
+    if (code !== 0) {
+      job.status = "failed";
+      job.error = errorData || `Exit code: ${code}`;
+      await job.save();
+      console.log("Job failed:", job.error);
+      return;
     }
 
-    // Path to main.py
-    const scriptPath = path.resolve("../MathVideoAI/backend/main.py");
+    console.log("Checking for output file:", filePath);
 
-    // Spawn python process using system python3
-    console.log("Spawning Python process with user prompt");
-    const pythonProcess = spawn("python3", [scriptPath, prompt], {
-      stdio: "pipe",
-    });
+    if (fs.existsSync(filePath)) {
+      job.status = "completed";
+      job.resultPath = filePath;
+      await job.save();
+      console.log("Job completed successfully. File saved at:", filePath);
+    } else {
+      job.status = "failed";
+      job.error = "Output file not found";
+      await job.save();
+      console.log("Job failed: Output file not found at", filePath);
+    }
+  });
 
-    let outputData = "";
-    let errorData = "";
+  // 3. Respond immediately
+  res.json({ jobId: job._id });
+  console.log("Responded with jobId:", job._id);
+};
 
-    // Collect and log stdout
-    pythonProcess.stdout.on("data", (data) => {
-      const msg = data.toString();
-      outputData += msg;
-      console.log(`[Python stdout]: ${msg.trim()}`);
-    });
-
-    // Collect and log stderr
-    pythonProcess.stderr.on("data", (data) => {
-      const msg = data.toString();
-      errorData += msg;
-      console.error(`[Python stderr]: ${msg.trim()}`);
-    });
-
-    // On process exit
-    pythonProcess.on("close", (code) => {
-      console.log(`[Python process exited with code ${code}]`);
-
-      if (code !== 0) {
-        return res.status(500).json({
-          error: "Python script failed",
-          details: errorData || `Exit code: ${code}`,
-        });
-      }
-
-      // Assume main.py writes output file in the same folder
-      const outputFileName = "final_output.mp4"; // replace with actual filename
-      const filePath = path.resolve(__dirname, "..", outputFileName);
-
-      if (!fs.existsSync(filePath)) {
-        return res
-          .status(500)
-          .json({ error: "Generated file not found", details: filePath });
-      }
-
-      return res.sendFile(filePath, {
-        headers: {
-          "Content-Type": "video/mp4",
-          "Content-Disposition": "attachment; filename=animation.mp4",
-        },
-      });
-    });
-  } catch (error) {
-    console.error("Error in generateAnimation:", error);
-    res.status(500).json({ error: error.message });
+// GET /api/status/:jobId
+const getStatus = async (req, res) => {
+  //console.log("Checking status for job:", req.params.jobId);
+  const job = await Job.findById(req.params.jobId);
+  if (!job) {
+    console.log("Job not found:", req.params.jobId);
+    return res.status(404).json({ error: "Job not found" });
   }
+
+  //console.log("Job status:", job.status);
+  res.json({ status: job.status, error: job.error || null });
 };
 
-// GET /health
-const healthCheck = (req, res) => {
-  res.json({ status: "healthy" });
+// GET /api/result/:jobId
+const getResult = async (req, res) => {
+  console.log("Fetching result for job:", req.params.jobId);
+  const job = await Job.findById(req.params.jobId);
+  if (!job) {
+    console.log("Job not found:", req.params.jobId);
+    return res.status(404).json({ error: "Job not found" });
+  }
+
+  if (job.status !== "completed") {
+    console.log("Job not completed yet:", job.status);
+    return res.status(400).json({ error: "Job not completed yet" });
+  }
+
+  console.log("Sending file for job:", job._id);
+  res.sendFile(job.resultPath, {
+    headers: {
+      "Content-Type": "video/mp4",
+      "Content-Disposition": "attachment; filename=animation.mp4",
+    },
+  });
 };
 
-// Export in CommonJS
-module.exports = {
-  generateAnimation,
-  healthCheck,
-};
+module.exports = { generateAnimation, getStatus, getResult };
