@@ -32,7 +32,9 @@ function Home() {
           className="lottie-background-player"
         />
         <div className="overlay-content">
-          <h1>Welcome to</h1>
+          <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-700">
+            Welcome to
+          </h1>
           <h1>StudyBuddy!</h1>
           <p>Explore our animated world.</p>
           <motion.button
