@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./MathVideo.css";
 import Request from "../../composables/Request";
+// 👇 Add this import for lottie
+import { Player } from "@lottiefiles/react-lottie-player";
+
+// import backgroundAnimation from "./background.json"; // <-- put your lottie JSON here
 
 function MathVideo() {
   const [prompt, setPrompt] = useState("");
@@ -20,11 +24,10 @@ function MathVideo() {
     setVideoUrl(null);
 
     try {
-      // 👇 call your wrapper, force responseType to "blob"
       const videoBlob = await Request.post(
         "/api/generate",
         { prompt },
-        { responseType: "blob" } // axios config override
+        { responseType: "blob" }
       );
 
       const videoObjectUrl = URL.createObjectURL(videoBlob);
@@ -42,9 +45,14 @@ function MathVideo() {
 
   return (
     <div className="mathApp">
+      {/* Background Lottie Animation */}
+      <Player src="/about-us.json" className="hero-lottie" autoplay loop />
+      
+      {/* <Lottie animationData={backgroundAnimation} loop={true} className="backgroundLottie" /> */}
+
       <header className="header">
         <div className="header-content">
-          <h1>AI Animation Generator</h1>
+          <h1 className="gradient-text">AI Animation Generator</h1>
           <p>Transform educational concepts into captivating animations</p>
         </div>
       </header>
@@ -95,27 +103,6 @@ function MathVideo() {
               download="animation.mp4"
               className="download-button"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 16L12 4M12 16L8 12M12 16L16 12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M4 20H20"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
               Download Video
             </a>
           </div>
