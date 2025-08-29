@@ -13,7 +13,7 @@ export const generateAnimation = async (req, res) => {
     }
 
     // Path to main.py
-    const scriptPath = path.resolve("../Text2MathVideoAI/backend/main.py");
+    const scriptPath = path.resolve("../MathVideoAI/backend/main.py");
 
     // Spawn python process using system python3
     console.log("Spawning Python process with user prompt");

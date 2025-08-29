@@ -1,0 +1,5 @@
+/* Import only the core styles needed for ColorSwatch */
+@import '@mantine/core/styles.layer.css';
+@layer mantine {
+  /* This will scope the styles to only apply within the Whiteboard component */
+}

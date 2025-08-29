@@ -59,11 +59,11 @@ function App() {
             path="whiteboard"
             element={
               <ProtectedRoute>
-                 <MantineProvider>
-                      <MathJaxContext>
-                      <Whiteboard />
-                      </MathJaxContext>
-                    </MantineProvider>
+                <MantineProvider>
+                  <MathJaxContext>
+                    <Whiteboard />
+                  </MathJaxContext>
+                </MantineProvider>
               </ProtectedRoute>
             }
           />

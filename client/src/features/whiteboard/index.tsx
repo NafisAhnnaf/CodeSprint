@@ -7,8 +7,8 @@ import LatexRenderer from "./components/LatexRenderer";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-// import '@mantine/core/styles.css';   necessary for color swatches
-
+//import '@mantine/core/styles.css';   //necessary for color swatches
+import "./style.css";
 const LOCAL_STORAGE_KEY = "key";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL || "http:localhost:8900";
@@ -208,13 +208,13 @@ export default function Whiteboard() {
       prevPages.map((page) =>
         page.id === currentPageId
           ? {
-              ...page,
-              drawingActions: page.drawingActions.slice(
-                0,
-                page.actionIndex + 1
-              ),
-              actionIndex: page.actionIndex + 1,
-            }
+            ...page,
+            drawingActions: page.drawingActions.slice(
+              0,
+              page.actionIndex + 1
+            ),
+            actionIndex: page.actionIndex + 1,
+          }
           : page
       )
     );
@@ -237,17 +237,17 @@ export default function Whiteboard() {
       prevPages.map((page) =>
         page.id === currentPageId
           ? {
-              ...page,
-              drawingActions: [
-                ...page.drawingActions.slice(0, page.actionIndex),
-                {
-                  lines: [
-                    ...(page.drawingActions[page.actionIndex]?.lines || []),
-                    newLine,
-                  ],
-                },
-              ],
-            }
+            ...page,
+            drawingActions: [
+              ...page.drawingActions.slice(0, page.actionIndex),
+              {
+                lines: [
+                  ...(page.drawingActions[page.actionIndex]?.lines || []),
+                  newLine,
+                ],
+              },
+            ],
+          }
           : page
       )
     );
@@ -282,12 +282,12 @@ export default function Whiteboard() {
       prevPages.map((page) =>
         page.id === currentPageId
           ? {
-              ...page,
-              drawingActions: [],
-              actionIndex: -1,
-              dictOfVars: {},
-              answers: [],
-            }
+            ...page,
+            drawingActions: [],
+            actionIndex: -1,
+            dictOfVars: {},
+            answers: [],
+          }
           : page
       )
     );
@@ -306,13 +306,13 @@ export default function Whiteboard() {
       prevPages.map((page) =>
         page.id === currentPageId
           ? {
-              ...page,
-              drawingActions: page.drawingActions.slice(
-                0,
-                page.actionIndex + 1
-              ),
-              actionIndex: page.actionIndex + 1,
-            }
+            ...page,
+            drawingActions: page.drawingActions.slice(
+              0,
+              page.actionIndex + 1
+            ),
+            actionIndex: page.actionIndex + 1,
+          }
           : page
       )
     );
@@ -338,17 +338,17 @@ export default function Whiteboard() {
       prevPages.map((page) =>
         page.id === currentPageId
           ? {
-              ...page,
-              drawingActions: [
-                ...page.drawingActions.slice(0, page.actionIndex),
-                {
-                  lines: [
-                    ...(page.drawingActions[page.actionIndex]?.lines || []),
-                    newLine,
-                  ],
-                },
-              ],
-            }
+            ...page,
+            drawingActions: [
+              ...page.drawingActions.slice(0, page.actionIndex),
+              {
+                lines: [
+                  ...(page.drawingActions[page.actionIndex]?.lines || []),
+                  newLine,
+                ],
+              },
+            ],
+          }
           : page
       )
     );
@@ -427,9 +427,9 @@ export default function Whiteboard() {
         prevPages.map((page) =>
           page.id === currentPageId
             ? {
-                ...page,
-                dictOfVars: { ...page.dictOfVars, ...newVars },
-              }
+              ...page,
+              dictOfVars: { ...page.dictOfVars, ...newVars },
+            }
             : page
         )
       );
@@ -459,16 +459,16 @@ export default function Whiteboard() {
             prevPages.map((page) =>
               page.id === currentPageId
                 ? {
-                    ...page,
-                    answers: [
-                      ...page.answers,
-                      ...res.data.map((data: Response) => ({
-                        x: answerX,
-                        y: answerY,
-                        text: data.result,
-                      })),
-                    ],
-                  }
+                  ...page,
+                  answers: [
+                    ...page.answers,
+                    ...res.data.map((data: Response) => ({
+                      x: answerX,
+                      y: answerY,
+                      text: data.result,
+                    })),
+                  ],
+                }
                 : page
             )
           );
@@ -658,10 +658,9 @@ export default function Whiteboard() {
               key={page.id}
               onClick={() => switchPage(page.id)}
               className={`w-12 h-12 rounded-lg flex items-center justify-center text-sm font-medium
-                ${
-                  currentPageId === page.id
-                    ? "bg-blue-100 text-blue-600 border border-blue-300"
-                    : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
+                ${currentPageId === page.id
+                  ? "bg-blue-100 text-blue-600 border border-blue-300"
+                  : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
                 }`}
             >
               {pages.findIndex((p) => p.id === page.id) + 1}
@@ -723,9 +722,8 @@ export default function Whiteboard() {
               </Button>
               <Button
                 onClick={() => setIsEraser(!isEraser)}
-                className={`${
-                  isEraser ? "bg-gray-200" : "bg-white"
-                } text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm`}
+                className={`${isEraser ? "bg-gray-200" : "bg-white"
+                  } text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm`}
                 variant="outline"
                 disabled={isLoading}
               >
@@ -750,9 +748,9 @@ export default function Whiteboard() {
                 </span>
               </Button>
             </div>
-            
+
             <Group>
-              {SWATCHES.map((swatch,i) => (
+              {SWATCHES.map((swatch, i) => (
                 <ColorSwatch
                   key={i}
                   color={swatch}
