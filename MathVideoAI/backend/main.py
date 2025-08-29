@@ -275,7 +275,7 @@ class AnimationGenerator:
             subprocess.run([
                 'ffmpeg', '-y',
                 '-i', 'voiceover_normal.mp3',
-                '-filter:a', 'atempo=1.25',
+                '-filter:a', 'atempo=1.32',
                 'voiceover.mp3'
             ], check=True)
             

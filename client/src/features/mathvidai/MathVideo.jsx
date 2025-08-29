@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MathVideo.css";
 import Request from "../../composables/Request";
 // 👇 Add this import for lottie
@@ -11,6 +11,10 @@ function MathVideo() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [videoUrl, setVideoUrl] = useState(null);
+
+  useEffect(() => {
+    setVideoUrl(localStorage.getItem("videoUrl") || null);
+  }, [videoUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +36,7 @@ function MathVideo() {
 
       const videoObjectUrl = URL.createObjectURL(videoBlob);
       setVideoUrl(videoObjectUrl);
+      localStorage.setItem("videoUrl", videoObjectUrl);
     } catch (err) {
       const message =
         err.response?.data?.error ||
@@ -47,7 +52,7 @@ function MathVideo() {
     <div className="mathApp">
       {/* Background Lottie Animation */}
       <Player src="/about-us.json" className="hero-lottie" autoplay loop />
-      
+
       {/* <Lottie animationData={backgroundAnimation} loop={true} className="backgroundLottie" /> */}
 
       <header className="header">
@@ -58,7 +63,10 @@ function MathVideo() {
       </header>
 
       <main className="main-content">
-        <form onSubmit={handleSubmit} className="generator-form">
+        <form
+          onSubmit={handleSubmit}
+          className="generator-form  flex flex-col space-y-5"
+        >
           <div className="form-group">
             <label htmlFor="prompt">
               What concept would you like to visualize?
@@ -72,39 +80,43 @@ function MathVideo() {
               disabled={isLoading}
             />
           </div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={isLoading ? "loading" : ""}
-          >
-            {isLoading ? (
-              <>
-                <span className="spinner"></span>
-                Generating...
-              </>
-            ) : (
-              "Create Animation"
-            )}
-          </button>
+          <div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={isLoading ? "loading" : ""}
+            >
+              {isLoading ? (
+                <>
+                  <span className="spinner"></span>
+                  Generating...
+                </>
+              ) : (
+                "Create Animation"
+              )}
+            </button>
+          </div>
           {error && <div className="error-message">{error}</div>}
         </form>
 
         {videoUrl && (
-          <div className="video-container">
-            <h2>Your Animation</h2>
+          <div className="video-container flex flex-col space-y-5">
+            <h2 className="text-xl">Your Animation</h2>
             <div className="video-wrapper">
               <video controls key={videoUrl}>
                 <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
-            <a
-              href={videoUrl}
-              download="animation.mp4"
-              className="download-button"
-            >
-              Download Video
-            </a>
+            <div className="flex justify-center">
+              <a
+                href={videoUrl}
+                download="animation.mp4"
+                className="download-button"
+              >
+                Download Video
+              </a>
+            </div>
           </div>
         )}
       </main>

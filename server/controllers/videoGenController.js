@@ -1,6 +1,11 @@
 import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // POST /api/generate
 export const generateAnimation = async (req, res) => {
@@ -51,7 +56,7 @@ export const generateAnimation = async (req, res) => {
 
       // Assume main.py writes output file in the same folder
       const outputFileName = "final_output.mp4"; // replace with actual filename
-      const filePath = path.join(path.dirname(scriptPath), outputFileName);
+      const filePath = path.resolve(__dirname, "..", outputFileName);
 
       if (!fs.existsSync(filePath)) {
         return res
