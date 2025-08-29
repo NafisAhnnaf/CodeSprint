@@ -90,7 +90,7 @@ const Footer = () => {
               >
                 &times;
               </button>
-              <h2 className="text-xl font-bold mb-3 text-gray-800">
+              <h2 className="text-xl font-bold mb-3 text-white">
                 Privacy Policy
               </h2>
               <p className="text-sm text-gray-600 leading-relaxed">
