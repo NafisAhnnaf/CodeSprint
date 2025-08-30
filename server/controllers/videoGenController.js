@@ -17,12 +17,11 @@ const generateAnimation = async (req, res) => {
 
   // 2. Run Python script asynchronously
   const scriptPath = path.resolve("../MathVideoAI/backend/main.py");
-  const outputFileName = `job_${job._id}.mp4`;
-  const filePath = path.resolve(__dirname, "..", outputFileName);
+  const outputFileName = "final_output.mp4"; // match Python script
+  const filePath = path.join(__dirname, "..", outputFileName);
 
   console.log("Spawning Python process:", scriptPath);
-
-  const pythonProcess = spawn("python3", ["-u", scriptPath, prompt], {
+  const pythonProcess = spawn("python3", [scriptPath, prompt], {
     stdio: ["pipe", "pipe", "pipe"], // capture stdout and stderr
   });
 
@@ -35,13 +34,13 @@ const generateAnimation = async (req, res) => {
   // Stream stdout without formatting
   pythonProcess.stdout.on("data", (data) => {
     const msg = data.toString();
-    process.stdout.write(`[Python stdout] ${msg}`); // write as-is
+    process.stdout.write(`[Python stdout] ${msg}`);
   });
 
   // Stream stderr without formatting
   pythonProcess.stderr.on("data", (data) => {
     const msg = data.toString();
-    process.stderr.write(`[Python stderr] ${msg}`); // write as-is
+    process.stderr.write(`[Python stderr] ${msg}`);
     errorData += msg;
   });
 
@@ -50,13 +49,20 @@ const generateAnimation = async (req, res) => {
 
     if (code !== 0) {
       job.status = "failed";
-      job.error = errorData || `Exit code: ${code}`;
+      job.error = (errorData || `Exit code: ${code}`).trim();
       await job.save();
       console.log("Job failed:", job.error);
       return;
     }
 
-    console.log("Checking for output file:", filePath);
+    // SUCCESS case
+    console.log("Python script finished successfully");
+    if (errorData.trim()) {
+      console.log(
+        "stderr logs (likely FFmpeg info, not an error):\n",
+        errorData
+      );
+    }
 
     if (fs.existsSync(filePath)) {
       job.status = "completed";
@@ -78,14 +84,11 @@ const generateAnimation = async (req, res) => {
 
 // GET /api/status/:jobId
 const getStatus = async (req, res) => {
-  //console.log("Checking status for job:", req.params.jobId);
   const job = await Job.findById(req.params.jobId);
   if (!job) {
     console.log("Job not found:", req.params.jobId);
     return res.status(404).json({ error: "Job not found" });
   }
-
-  //console.log("Job status:", job.status);
   res.json({ status: job.status, error: job.error || null });
 };
 
