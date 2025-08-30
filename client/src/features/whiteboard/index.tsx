@@ -703,50 +703,49 @@ export default function Whiteboard() {
         <div className="flex-1 flex flex-col">
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-lg shadow-sm border border-gray-200 mb-4">
             <div className="flex items-center gap-2">
-              <Button
+              <button
                 onClick={clear}
-                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm"
+                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm px-4 py-2 rounded"
                 disabled={isLoading}
-                variant="outline"
+                type="button"
               >
                 <span className="font-medium">Clear Canvas</span>
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={undo}
-                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm"
-                variant="outline"
+                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm px-4 py-2 rounded"
                 disabled={isLoading}
+                type="button"
               >
                 <span className="font-medium">Undo</span>
                 <span className="ml-2 text-xs text-gray-500">(Ctrl+Z)</span>
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={() => setIsEraser(!isEraser)}
-                className={`${isEraser ? "bg-gray-200" : "bg-white"
-                  } text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm`}
-                variant="outline"
+                className={`${isEraser ? "bg-gray-200" : "bg-white"} text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm px-4 py-2 rounded`}
                 disabled={isLoading}
+                type="button"
               >
                 <span className="font-medium">Eraser</span>
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={exportToPDF}
-                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm"
-                variant="outline"
+                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm px-4 py-2 rounded"
                 disabled={isLoading}
+                type="button"
               >
                 <span className="font-medium">Export PDF</span>
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm"
-                variant="outline"
+                className="bg-white text-gray-800 hover:bg-gray-100 border border-gray-300 shadow-sm px-4 py-2 rounded"
                 disabled={isLoading}
+                type="button"
               >
                 <span className="font-medium">
                   {sidebarOpen ? "Hide" : "Show"} Explanation
                 </span>
-              </Button>
+              </button>
             </div>
 
             <Group>
@@ -762,26 +761,28 @@ export default function Whiteboard() {
             </Group>
 
             <div className="flex items-center gap-2">
-              <Button
+              <button
                 onClick={getExplanation}
-                className="bg-green-600 hover:bg-green-700 text-white shadow-sm"
+                className="bg-green-600 hover:bg-green-700 text-white shadow-sm px-4 py-2 rounded"
                 disabled={isLoading || isExplaining}
+                type="button"
               >
                 <span className="font-medium">
                   {isExplaining ? "Generating..." : "Explain"}
                 </span>
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={runRoute}
                 onTouchEnd={runRoute}
-                className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm px-4 py-2 rounded"
                 disabled={isLoading}
+                type="button"
               >
                 <span className="font-medium">
                   {isLoading ? "Calculating..." : "Calculate"}
                 </span>
                 <span className="ml-2 text-xs text-blue-100">(Enter)</span>
-              </Button>
+              </button>
             </div>
           </div>
 
@@ -849,13 +850,14 @@ export default function Whiteboard() {
                   className="flex-1 border border-gray-300 rounded px-3 py-2"
                   onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                 />
-                <Button
+                <button
                   onClick={handleSendMessage}
-                  className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm px-4 py-2 rounded"
                   disabled={isExplaining}
+                  type="button"
                 >
                   Send
-                </Button>
+                </button>
               </div>
             </div>
           </div>

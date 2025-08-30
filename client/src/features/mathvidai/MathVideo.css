@@ -1,6 +1,6 @@
 .mathApp {
   --primary: #0a0f24; /* main site background */
-  --accent: #00e5ff;  /* cyan glow */
+  --accent: #00e5ff; /* cyan glow */
   --text: #ffffff;
   --text-light: #94a3b8;
   --error: #ef4444;
@@ -101,9 +101,9 @@
   box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
 }
 
-/* Buttons */
+/* Buttons
 button {
-  background: var(--accent);
+  background: purple;
   color: #0a0f24;
   border: none;
   padding: 1rem 1rem;
@@ -124,7 +124,7 @@ button:disabled {
   color: #94a3b8;
   cursor: not-allowed;
   transform: none;
-}
+} */
 
 .spinner {
   width: 18px;

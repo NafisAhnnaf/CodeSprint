@@ -12,9 +12,9 @@ function MathVideo() {
   const [error, setError] = useState(null);
   const [videoUrl, setVideoUrl] = useState(null);
 
-  useEffect(() => {
-    setVideoUrl(localStorage.getItem("videoUrl") || null);
-  }, [videoUrl]);
+  // useEffect(() => {
+  //   setVideoUrl(localStorage.getItem("videoUrl") || null);
+  // }, [videoUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,22 +28,48 @@ function MathVideo() {
     setVideoUrl(null);
 
     try {
-      const videoBlob = await Request.post(
-        "/api/generate",
-        { prompt },
-        { responseType: "blob" }
-      );
+      // Step 1: Send job request
+      console.log("Submitting prompt:", prompt);
+      const res = await Request.post("/api/generate", { prompt });
+      console.log(res);
+      const jobId = res.jobId;
 
-      const videoObjectUrl = URL.createObjectURL(videoBlob);
-      setVideoUrl(videoObjectUrl);
-      localStorage.setItem("videoUrl", videoObjectUrl);
+      // Step 2: Poll for status
+      const pollInterval = setInterval(async () => {
+        try {
+          const status = await Request.get(`/api/generate/status/${jobId}`);
+
+          if (status.status === "completed") {
+            clearInterval(pollInterval);
+
+            // Step 3: Fetch video file
+            const videoBlob = await Request.get(
+              `/api/generate/result/${jobId}`,
+              {
+                responseType: "blob",
+              }
+            );
+
+            const videoObjectUrl = URL.createObjectURL(videoBlob);
+            setVideoUrl(videoObjectUrl);
+            localStorage.setItem("videoUrl", videoObjectUrl);
+            setIsLoading(false);
+          } else if (status.status === "failed") {
+            clearInterval(pollInterval);
+            setError(status.error || "Job failed");
+            setIsLoading(false);
+          }
+        } catch (err) {
+          clearInterval(pollInterval);
+          setError(
+            "Error checking job status: " +
+              (err.response?.data?.error || err.message)
+          );
+          setIsLoading(false);
+        }
+      }, 5000); // poll every 5s
     } catch (err) {
-      const message =
-        err.response?.data?.error ||
-        err.message ||
-        "Failed to generate animation";
-      setError(message);
-    } finally {
+      setError(err.response?.data?.error || "Failed to start job");
       setIsLoading(false);
     }
   };
