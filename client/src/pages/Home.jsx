@@ -2,7 +2,7 @@ import React from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { useNavigate } from "react-router-dom"; // 🟢 Import useNavigate
+import { Link, useNavigate } from "react-router-dom"; // 🟢 Import useNavigate
 
 function Home() {
   const navigate = useNavigate(); // 🟢 Initialize navigate
@@ -37,25 +37,49 @@ function Home() {
           </h1>
           <h1>StudyBuddy!</h1>
           <p>Explore our animated world.</p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleGetStarted} // 🟢 Handle button click
-            style={{
-              padding: "12px 25px",
-              fontSize: "18px",
-              backgroundColor: "#00f5ff",
-              color: "#0a0f24",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: "bold",
-              marginTop: "20px",
-              boxShadow: "0 4px 15px rgba(0, 245, 255, 0.3)",
-            }}
-          >
-            Get Started
-          </motion.button>
+          <Link to= "/whiteboard">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+               // 🟢 Handle button click
+              style={{
+                padding: "12px 25px",
+                fontSize: "18px",
+                backgroundColor: "#00f5ff",
+                color: "#0a0f24",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                marginTop: "20px",
+                boxShadow: "0 4px 15px rgba(0, 245, 255, 0.3)",
+              }}
+            >
+              IntelliBoard
+            </motion.button>
+          </Link>
+          <Link to= "/vid-gen">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+               // 🟢 Handle button click
+              style={{
+                padding: "12px 25px",
+                fontSize: "18px",
+                backgroundColor: "#00f5ff",
+                color: "#0a0f24",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                marginLeft: "10px",
+                marginTop: "20px",
+                boxShadow: "0 4px 15px rgba(0, 245, 255, 0.3)",
+              }}
+            >
+              ClarityVids
+            </motion.button>
+          </Link>
         </div>
       </div>
     </motion.div>

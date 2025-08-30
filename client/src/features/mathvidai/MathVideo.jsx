@@ -84,7 +84,7 @@ function MathVideo() {
             <button
               type="submit"
               disabled={isLoading}
-              className={isLoading ? "loading" : ""}
+              className={isLoading ? "loading" : "button-create-animation"}
             >
               {isLoading ? (
                 <>
