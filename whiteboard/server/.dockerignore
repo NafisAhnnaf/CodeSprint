@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.git/
+.vscode/
+.idea/
+.DS_Store
+.env.example
+.env.local
+docker-compose.yml
+README.md
