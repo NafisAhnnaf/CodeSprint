@@ -101,9 +101,15 @@
   box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
 }
 
+<<<<<<< HEAD
 /* Buttons
 button {
   background: purple;
+=======
+/* Buttons */
+button-create-animation {
+  background: var(--accent);
+>>>>>>> feature/proper-client-side
   color: #0a0f24;
   border: none;
   padding: 1rem 1rem;
@@ -114,12 +120,12 @@ button {
   scale: 0.8;
 }
 
-button:hover {
+button-create-animation:hover {
   background: #00bcd4;
   transform: translateY(-2px);
 }
 
-button:disabled {
+/* button:disabled {
   background: #334155;
   color: #94a3b8;
   cursor: not-allowed;
