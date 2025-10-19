@@ -14,8 +14,16 @@ import { ToastContainer } from "react-toastify";
 import Contact from "./pages/Contact";
 import { MathJaxContext } from "better-react-mathjax";
 import { MantineProvider } from "@mantine/core";
+import ping from "./utils/ping";
+import { useEffect } from "react";
 
 function App() {
+  const pingServer = async()=>{
+    await ping();
+  }
+  useEffect(()=>{
+    pingServer();
+  },[])
   return (
     <>
       <Routes>
